@@ -17,6 +17,6 @@ This is a simple contact management system that allows users to enter their deta
 
 ## Usage
 
-1. Clone the repository: `git clone https://github.com/your-username/contact-management-system.git`
+1. Clone the repository: `git clone https://github.com/your-username/contact-management-system.git`](https://github.com/Neeraj-Maini/JS-Assignment.git`
 2. Open the `sample.html` file in your web browser.
 3. Use the provided form to add, edit, or delete contacts.
