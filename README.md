@@ -1,4 +1,4 @@
-**#Contact Management System**
+## Contact Management System
 
 This is a simple contact management system that allows users to enter their details and manage their contacts. The system provides functionality to add, edit, and delete contact information.
 
