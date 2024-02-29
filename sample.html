@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact List App</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        padding: 20px;
+      }
+      .contact {
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+      }
+      .actions {
+        display: flex;
+        justify-content: space-between;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center">Contact List</h1>
+      <div id="addContactForm" style="display: none">
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="firstName"
+            placeholder="First Name"
+          />
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="lastName"
+            placeholder="Last Name"
+          />
+        </div>
+        <div class="form-group">
+          <label for="mobileNo">Mobile No</label>
+          <input
+            type="text"
+            class="form-control"
+            id="mobileNo"
+            placeholder="Mobile No"
+          />
+        </div>
+        <div class="form-group">
+          <label for="email">Email ID</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            placeholder="Email ID"
+          />
+        </div>
+        <div class="form-group">
+          <label for="organization">Organization</label>
+          <input
+            type="text"
+            class="form-control"
+            id="organization"
+            placeholder="Organization"
+          />
+        </div>
+        <div class="form-group">
+          <label for="label">Label</label>
+          <select class="form-control" id="label">
+            <option value="work">Work</option>
+            <option value="home">Home</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="birthdate">Birthdate</label>
+          <input
+            type="date"
+            class="form-control"
+            id="birthdate"
+            placeholder="Birthdate"
+          />
+        </div>
+        <button class="btn btn-primary" onclick="addContact()">
+          Add Contact
+        </button>
+      </div>
+      <button
+        id="addNewContactButton"
+        class="btn btn-primary"
+        onclick="toggleAddContactForm()"
+      >
+        + Add New Contact
+      </button>
+
+      <div class="contact-list mt-4" id="contactList"></div>
+    </div>
+
+    <script>
+      let contacts = [];
+
+      const toggleAddContactForm = () => {
+        const addContactForm = document.getElementById("addContactForm");
+        addContactForm.style.display =
+          addContactForm.style.display === "none" ? "block" : "none";
+
+        const addNewContactButton = document.getElementById(
+          "addNewContactButton"
+        );
+        addNewContactButton.style.display =
+          addContactForm.style.display === "none" ? "block" : "none";
+      };
+
+      const addContact = () => {
+        const firstName = document.getElementById("firstName").value.trim();
+        const lastName = document.getElementById("lastName").value.trim();
+        const mobileNo = document.getElementById("mobileNo").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const organization = document
+          .getElementById("organization")
+          .value.trim();
+        const label = document.getElementById("label").value;
+        const birthdate = document.getElementById("birthdate").value.trim();
+
+        if (
+          !firstName ||
+          !lastName ||
+          !mobileNo ||
+          !email ||
+          !organization ||
+          !label ||
+          !birthdate
+        ) {
+          alert("Please fill in all fields.");
+          return;
+        }
+
+        const newContact = {
+          firstName,
+          lastName,
+          mobileNo,
+          email,
+          organization,
+          label,
+          birthdate,
+        };
+        contacts.push(newContact);
+        renderContactList();
+        clearForm();
+      };
+
+      const renderContactList = () => {
+        const contactList = document.getElementById("contactList");
+        contactList.innerHTML = "";
+
+        contacts.forEach((contact, index) => {
+          const contactElement = document.createElement("div");
+          contactElement.classList.add("contact");
+          contactElement.innerHTML = `
+        <div>
+          <strong>${contact.firstName} ${contact.lastName}</strong><br>
+          ${contact.mobileNo}<br>
+          ${contact.email}<br>
+          ${contact.organization}<br>
+          Label: ${contact.label}<br>
+          Birthdate: ${contact.birthdate}
+        </div>
+        <div class="actions">
+          <button class="btn btn-info" onclick="editContact(${index})">Edit</button>
+          <button class="btn btn-danger" onclick="deleteContact(${index})">Delete</button>
+        </div>
+      `;
+          contactList.appendChild(contactElement);
+        });
+      };
+
+      const clearForm = () => {
+        document.getElementById("firstName").value = "";
+        document.getElementById("lastName").value = "";
+        document.getElementById("mobileNo").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("organization").value = "";
+        document.getElementById("label").value = "work";
+        document.getElementById("birthdate").value = "";
+      };
+
+      const deleteContact = (index) => {
+        contacts.splice(index, 1);
+        renderContactList();
+      };
+
+      const editContact = (index) => {
+        const contact = contacts[index];
+        document.getElementById("firstName").value = contact.firstName;
+        document.getElementById("lastName").value = contact.lastName;
+        document.getElementById("mobileNo").value = contact.mobileNo;
+        document.getElementById("email").value = contact.email;
+        document.getElementById("organization").value = contact.organization;
+        document.getElementById("label").value = contact.label;
+        document.getElementById("birthdate").value = contact.birthdate;
+
+        deleteContact(index);
+      };
+    </script>
+  </body>
+</html>
